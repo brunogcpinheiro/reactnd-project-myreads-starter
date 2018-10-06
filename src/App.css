@@ -120,6 +120,7 @@ body,
 .books-grid li {
   padding: 10px 15px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .book {
