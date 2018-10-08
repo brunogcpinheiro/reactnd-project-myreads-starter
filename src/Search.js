@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
-import ShelfChanger from './ShelfChanger';
+import Book from './Book';
 
 class Search extends Component {
   state = {
@@ -19,7 +19,7 @@ class Search extends Component {
       BooksAPI.search(query).then(newBooks => {
         newBooks.length > 0
           ? this.setState({
-              filtered: newBooks,
+              filtered: this.props.books.concat(newBooks),
               error: false,
             })
           : this.setState({ filtered: [], error: true });
@@ -50,21 +50,7 @@ class Search extends Component {
           <ol className="books-grid">
             {!error ? (
               filtered.map(book => (
-                <div className="book" key={book.id}>
-                  <div className="book-top">
-                    <div
-                      className="book-cover"
-                      style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: `url(${book.imageLinks.thumbnail})`,
-                      }}
-                    />
-                    <ShelfChanger changeShelf={changeShelf} book={book} />
-                  </div>
-                  <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors}</div>
-                </div>
+                <Book book={book} changeShelf={changeShelf} />
               ))
             ) : (
               <div>No results. Please search again!</div>
