@@ -2,11 +2,13 @@ import React from 'react';
 
 const ShelfChanger = props => {
   const { book, changeShelf } = props;
+  const shelfType = (book.shelf) ? book.shelf : 'move';
+    
   return (
     <div className="book-shelf-changer">
       <select
         onChange={e => changeShelf(book, e.target.value)}
-        value={book.shelf}>
+        value={shelfType}>
         <option value="move" disabled>
           Move to...
         </option>

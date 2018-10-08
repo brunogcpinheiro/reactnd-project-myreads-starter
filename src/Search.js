@@ -16,20 +16,22 @@ class Search extends Component {
     }));
 
     if (query) {
-      BooksAPI.search(query).then(newBooks => {
-        newBooks.length > 0
-          ? this.setState({
-              filtered: this.props.books.concat(newBooks),
+      BooksAPI.search(query).then(filtered => {
+        filtered.length > 0
+          ? this.setState(state => ({
+              filtered,
               error: false,
-            })
+            }))
           : this.setState({ filtered: [], error: true });
       });
+    } else {
+      this.setState({ filtered: [], error: false });
     }
   };
 
   render() {
     const { query, filtered, error } = this.state;
-    const { changeShelf } = this.props;
+    const { changeShelf, books } = this.props;
 
     return (
       <div className="search-books">
@@ -50,7 +52,7 @@ class Search extends Component {
           <ol className="books-grid">
             {!error ? (
               filtered.map(book => (
-                <Book book={book} changeShelf={changeShelf} />
+                <Book books={books} book={book} changeShelf={changeShelf} />
               ))
             ) : (
               <div>No results. Please search again!</div>
