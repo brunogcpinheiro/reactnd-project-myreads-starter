@@ -20,13 +20,15 @@ class Search extends Component {
             books[index] = book;
           });
           this.setState({
-            searchedBooks: books
+            searchedBooks: books,
+            error: false
           });
         }
       });
       } else {
       this.setState({
-          searchedBooks: []
+          searchedBooks: [],
+          error: true
       });
     }
   };
@@ -56,7 +58,7 @@ class Search extends Component {
                 <Book book={book} changeShelf={changeShelf} key={book.id} />
               ))
             ) : (
-              <div>No results. Please search again!</div>
+              <div style={{ color: 'white' }}>No results. Please search again!</div>
             )}
           </ol>
         </div>
