@@ -2,7 +2,7 @@ import React from 'react';
 
 const ShelfChanger = props => {
   const { book, changeShelf } = props;
-  const shelfType = (book.shelf) ? book.shelf : 'move';
+  const shelfType = (book.shelf) ? book.shelf : 'none';
     
   return (
     <div className="book-shelf-changer">
