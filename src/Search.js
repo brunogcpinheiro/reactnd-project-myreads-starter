@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { DebounceInput } from 'react-debounce-input';
 import * as BooksAPI from './BooksAPI';
 import Book from './Book';
 
@@ -9,26 +10,26 @@ class Search extends Component {
     searchedBooks: [],
     error: false,
   };
-  
+
   updateQuery = query => {
-    if(query) {
-      BooksAPI.search(query).then((books) => {
-        if(books.length){
+    if (query) {
+      BooksAPI.search(query).then(books => {
+        if (books.length) {
           books.forEach((book, index) => {
-            let myBook = this.props.books.find((b) => b.id === book.id);
+            let myBook = this.props.books.find(b => b.id === book.id);
             book.shelf = myBook ? myBook.shelf : 'none';
             books[index] = book;
           });
           this.setState({
             searchedBooks: books,
-            error: false
+            error: false,
           });
         }
       });
-      } else {
+    } else {
       this.setState({
-          searchedBooks: [],
-          error: true
+        searchedBooks: [],
+        error: true,
       });
     }
   };
@@ -44,8 +45,10 @@ class Search extends Component {
             Close
           </Link>
           <div className="search-books-input-wrapper">
-            <input
+            <DebounceInput
               type="text"
+              minLength={2}
+              debounceTimeout={500}
               placeholder="Search by title or author"
               onChange={e => this.updateQuery(e.target.value)}
             />
@@ -58,7 +61,9 @@ class Search extends Component {
                 <Book book={book} changeShelf={changeShelf} key={book.id} />
               ))
             ) : (
-              <div style={{ color: 'white' }}>No results. Please search again!</div>
+              <div style={{ color: 'white' }}>
+                No results. Please search again!
+              </div>
             )}
           </ol>
         </div>
