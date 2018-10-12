@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ShelfChanger = props => {
   const { book, changeShelf } = props;
-    
+
   return (
     <div className="book-shelf-changer">
       <select
@@ -18,6 +19,11 @@ const ShelfChanger = props => {
       </select>
     </div>
   );
+};
+
+ShelfChanger.propTypes = {
+  book: PropTypes.object.isRequired,
+  changeShelf: PropTypes.func.isRequired,
 };
 
 export default ShelfChanger;
